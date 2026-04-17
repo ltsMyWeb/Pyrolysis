@@ -1,0 +1,457 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A high-end immersive website explaining the pyrolysis process with cinematic graphics, SVG illustrations, and motion-rich storytelling.">
+  <title>Pyrolysis | Matter Under Intelligent Heat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Syne:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <canvas class="noise-canvas" id="noiseCanvas" aria-hidden="true"></canvas>
+  <div class="cursor-glow" id="cursorGlow" aria-hidden="true"></div>
+
+  <div class="page-shell">
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+    <div class="grid-overlay"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#top">
+        <span class="brand-mark"></span>
+        <span>Pyrolysis</span>
+      </a>
+
+      <nav class="site-nav">
+        <a href="#process">Process</a>
+        <a href="#products">Outputs</a>
+        <a href="#reactors">Reactors</a>
+        <a href="#applications">Applications</a>
+        <a href="#resources">Resources</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero section">
+        <div class="hero-copy reveal">
+          <p class="eyebrow">Thermochemical conversion, orchestrated</p>
+          <h1>Pyrolysis makes waste feel like a high-value phase transition.</h1>
+          <p class="hero-text">
+            Pyrolysis is the controlled decomposition of carbon-rich material under heat and in very low oxygen.
+            Instead of burning a feedstock away, it separates the chemistry into usable streams: oils, gases, and char.
+            This page turns that science into a visual system you can feel, not just read.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button button-primary" href="#process">Decode The Process</a>
+            <a class="button button-secondary" href="https://en.wikipedia.org/wiki/Pyrolysis" target="_blank" rel="noreferrer">Open Primer</a>
+          </div>
+
+          <div class="hero-badges">
+            <span>Low oxygen</span>
+            <span>Thermal cracking</span>
+            <span>Liquid + gas + carbon</span>
+          </div>
+
+          <ul class="hero-metrics">
+            <li>
+              <strong>300-900°C</strong>
+              <span>Thermal window shifts with feedstock, residence time, and the desired product slate.</span>
+            </li>
+            <li>
+              <strong>Fast or Slow</strong>
+              <span>Heating profile changes the chemistry, pushing the outcome toward liquid, gas, or solid carbon.</span>
+            </li>
+            <li>
+              <strong>Oxygen-starved</strong>
+              <span>That single condition prevents full combustion and creates space for controlled decomposition.</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-stage">
+            <div class="hero-rings ring-a"></div>
+            <div class="hero-rings ring-b"></div>
+            <svg class="hero-svg" viewBox="0 0 800 860" role="img" aria-label="Pyrolysis chamber illustration showing feed entering, heat interacting, and outputs separating.">
+              <defs>
+                <linearGradient id="shellGradient" x1="140" y1="80" x2="660" y2="760" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#16120b"/>
+                  <stop offset="1" stop-color="#050505"/>
+                </linearGradient>
+                <linearGradient id="coreGradient" x1="250" y1="150" x2="550" y2="620" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#15110a"/>
+                  <stop offset="1" stop-color="#0c0a07"/>
+                </linearGradient>
+                <radialGradient id="plasmaGradient" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(400 406) rotate(90) scale(160 160)">
+                  <stop stop-color="#fff1bc"/>
+                  <stop offset="0.28" stop-color="#ffcf53"/>
+                  <stop offset="0.6" stop-color="#ff9b2f"/>
+                  <stop offset="1" stop-color="#f0b63f" stop-opacity="0.08"/>
+                </radialGradient>
+                <linearGradient id="streamCool" x1="568" y1="440" x2="718" y2="440" gradientUnits="userSpaceOnUse">
+                  <stop stop-color="#ffcf53"/>
+                  <stop offset="1" stop-color="#ffd54f"/>
+                </linearGradient>
+                <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feGaussianBlur stdDeviation="16" result="blur"/>
+                  <feMerge>
+                    <feMergeNode in="blur"/>
+                    <feMergeNode in="SourceGraphic"/>
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <g class="svg-float shell-group">
+                <rect x="160" y="90" width="480" height="620" rx="80" fill="url(#shellGradient)" stroke="#ffffff" stroke-opacity="0.15"/>
+                <rect x="250" y="152" width="300" height="490" rx="150" fill="url(#coreGradient)" stroke="#ffffff" stroke-opacity="0.14"/>
+                <ellipse cx="400" cy="405" rx="130" ry="146" fill="url(#plasmaGradient)" filter="url(#softGlow)"/>
+                <ellipse cx="400" cy="404" rx="78" ry="88" fill="#fff0c4" fill-opacity="0.28"/>
+                <path d="M278 618C318 654 484 654 524 618" stroke="#ffffff" stroke-opacity="0.18" stroke-width="14" stroke-linecap="round"/>
+                <path d="M280 190C320 158 484 158 522 190" stroke="#ffffff" stroke-opacity="0.16" stroke-width="14" stroke-linecap="round"/>
+              </g>
+
+              <g class="svg-float svg-delay-1">
+                <path d="M112 294C170 274 202 252 248 220" stroke="#ffd54f" stroke-width="18" stroke-linecap="round"/>
+                <circle cx="92" cy="302" r="28" fill="#ffd54f"/>
+                <circle cx="132" cy="286" r="10" fill="#fff0c9"/>
+              </g>
+
+              <g class="svg-float svg-delay-2">
+                <path d="M550 346C626 330 684 298 722 250" stroke="#ffcf53" stroke-width="18" stroke-linecap="round"/>
+                <path d="M552 442C632 436 688 450 736 496" stroke="url(#streamCool)" stroke-width="18" stroke-linecap="round"/>
+                <circle cx="732" cy="244" r="26" fill="#ffcf53"/>
+                <circle cx="742" cy="502" r="24" fill="#ffd54f"/>
+              </g>
+
+              <g class="svg-float svg-delay-3">
+                <path d="M248 520C206 544 168 566 118 584" stroke="#ff9b2f" stroke-width="18" stroke-linecap="round"/>
+                <circle cx="98" cy="592" r="24" fill="#ff9b2f"/>
+                <circle cx="124" cy="576" r="10" fill="#ffe2bc"/>
+              </g>
+
+              <g class="svg-particles" filter="url(#softGlow)">
+                <circle cx="356" cy="370" r="7" fill="#fff1bc"/>
+                <circle cx="444" cy="346" r="5" fill="#ffcf53"/>
+                <circle cx="432" cy="440" r="6" fill="#ffd54f"/>
+                <circle cx="372" cy="462" r="4" fill="#ff9b2f"/>
+                <circle cx="486" cy="396" r="4" fill="#fff1bc"/>
+              </g>
+            </svg>
+
+            <div class="hero-panel panel-left">
+              <span>Feedstock</span>
+              <strong>Biomass, plastics, organics</strong>
+            </div>
+            <div class="hero-panel panel-right">
+              <span>Outputs</span>
+              <strong>Bio-oil, syngas, char</strong>
+            </div>
+            <div class="hero-panel panel-bottom">
+              <span>Condition</span>
+              <strong>Heat without meaningful oxygen</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section section-slab reveal">
+        <div class="slab-grid">
+          <article class="slab-copy">
+            <p class="eyebrow">What makes it different</p>
+            <h2>Combustion destroys structure. Pyrolysis edits it.</h2>
+            <p>
+              Think of pyrolysis as selective thermal disassembly. Large molecular networks become smaller fragments, vapor-phase intermediates,
+              and fixed carbon. The system is not trying to maximize flames. It is trying to choreograph decomposition.
+            </p>
+          </article>
+          <div class="slab-visual">
+            <div class="mini-spectrum">
+              <span>moisture</span>
+              <span>volatiles</span>
+              <span>fixed carbon</span>
+              <span>ash</span>
+            </div>
+            <div class="mini-wave"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section process-layout" id="process">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Process anatomy</p>
+          <h2>A thermal sequence with very precise consequences.</h2>
+          <p>
+            The full process depends on hardware, temperature ramp, particle size, and residence time.
+            But the major phases below are the backbone of nearly every serious pyrolysis system.
+          </p>
+        </div>
+
+        <div class="process-grid">
+          <div class="timeline">
+            <article class="timeline-item reveal">
+              <span class="timeline-index">01</span>
+              <div>
+                <h3>Preparation</h3>
+                <p>Feedstock is sorted, dried, and sized to make heat transfer more even and product behavior more predictable.</p>
+              </div>
+            </article>
+            <article class="timeline-item reveal">
+              <span class="timeline-index">02</span>
+              <div>
+                <h3>Primary devolatilization</h3>
+                <p>As temperature rises, volatile compounds break free from the solid matrix and begin forming a reactive vapor cloud.</p>
+              </div>
+            </article>
+            <article class="timeline-item reveal">
+              <span class="timeline-index">03</span>
+              <div>
+                <h3>Secondary cracking</h3>
+                <p>Hot vapors may crack further into lighter gas molecules if they remain too long in the hot zone.</p>
+              </div>
+            </article>
+            <article class="timeline-item reveal">
+              <span class="timeline-index">04</span>
+              <div>
+                <h3>Condensation</h3>
+                <p>Selected vapors are cooled into liquid fractions while permanent gases remain uncondensed for reuse or upgrading.</p>
+              </div>
+            </article>
+            <article class="timeline-item reveal">
+              <span class="timeline-index">05</span>
+              <div>
+                <h3>Solid recovery</h3>
+                <p>The remaining char carries carbon, mineral content, and porosity that can be valuable in downstream applications.</p>
+              </div>
+            </article>
+          </div>
+
+          <aside class="process-dashboard reveal">
+            <div class="dial-card">
+              <span class="dial-label">Reactor climate</span>
+              <div class="dial-wrap">
+                <div class="dial-ring"></div>
+                <div class="dial-core">
+                  <strong id="tempValue">540</strong>
+                  <span>deg C</span>
+                </div>
+              </div>
+              <input id="tempSlider" type="range" min="320" max="820" value="540">
+            </div>
+
+            <div class="yield-bars">
+              <div class="yield-row">
+                <span>Bio-oil</span>
+                <div class="bar"><i id="oilBar" style="width: 58%"></i></div>
+              </div>
+              <div class="yield-row">
+                <span>Syngas</span>
+                <div class="bar"><i id="gasBar" style="width: 24%"></i></div>
+              </div>
+              <div class="yield-row">
+                <span>Char</span>
+                <div class="bar"><i id="charBar" style="width: 18%"></i></div>
+              </div>
+            </div>
+
+            <p class="dashboard-note">
+              This interactive panel is conceptual, not a plant design calculator. It simply shows how product emphasis can shift as conditions intensify.
+            </p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section showcase">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Material portraits</p>
+          <h2>Different feedstocks enter with different chemistry and leave with different value.</h2>
+        </div>
+
+        <div class="showcase-grid showcase-grid-advanced">
+          <figure class="media-card reveal tilt-card">
+            <img src="./assets/feedstock-biomass.svg" alt="Illustration of biomass feedstock including wood chips and agricultural residues.">
+            <figcaption>
+              <h3>Biomass</h3>
+              <p>Lignin, cellulose, hemicellulose, minerals, and water content all change the response to heat.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="media-card reveal tilt-card">
+            <img src="./assets/feedstock-plastic.svg" alt="Illustration of sorted polymer feedstock flowing through a stylized process line.">
+            <figcaption>
+              <h3>Plastics</h3>
+              <p>Hydrocarbon-rich polymers can crack into liquid and gaseous products when the stream is properly controlled.</p>
+            </figcaption>
+          </figure>
+
+          <figure class="media-card reveal tilt-card">
+            <img src="./assets/feedstock-char.svg" alt="Illustration of porous carbon char with glowing internal structure.">
+            <figcaption>
+              <h3>Char</h3>
+              <p>Porosity, ash chemistry, and carbon architecture decide whether char becomes fuel, filter, or functional material.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section class="section products-layout" id="products">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Main outputs</p>
+          <h2>One feed pathway, three radically different product families.</h2>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card reveal">
+            <h3>Bio-oil / pyrolysis liquid</h3>
+            <p>
+              Condensed organic vapors create a dark liquid mixture that may be burned, studied, upgraded, separated,
+              or used as an intermediate in advanced thermal and chemical workflows.
+            </p>
+            <ul>
+              <li>Favored by rapid heating and fast vapor quenching</li>
+              <li>Property profile depends strongly on the original material</li>
+              <li>Commonly positioned as an energy or upgrading intermediate</li>
+            </ul>
+          </article>
+
+          <article class="product-card reveal">
+            <h3>Syngas / permanent gas</h3>
+            <p>
+              This stream often contains hydrogen, carbon monoxide, methane, carbon dioxide, and light hydrocarbons.
+              In many systems it helps provide process heat and reduce external energy demand.
+            </p>
+            <ul>
+              <li>Grows as cracking becomes more severe</li>
+              <li>Can support internal heat integration</li>
+              <li>May feed downstream conversion or combustion systems</li>
+            </ul>
+          </article>
+
+          <article class="product-card reveal">
+            <h3>Char / carbon solid</h3>
+            <p>
+              The residual solid is carbon-dense and structurally important. Depending on composition and treatment,
+              it can move into materials, adsorption, energy, or land-based use cases.
+            </p>
+            <ul>
+              <li>Often emphasized in slower pyrolysis regimes</li>
+              <li>Mineral fraction and surface area matter</li>
+              <li>Can represent durable carbon in some pathways</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reactors-layout" id="reactors">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Reactor thinking</p>
+          <h2>The machine is not a container. It is the chemistry strategy.</h2>
+        </div>
+
+        <div class="reactor-grid">
+          <article class="reactor-card reveal">
+            <h3>Fixed bed</h3>
+            <p>Simple geometry, slower transport, and clearer solids behavior make it a familiar route for char-oriented systems and lab work.</p>
+          </article>
+          <article class="reactor-card reveal">
+            <h3>Fluidized bed</h3>
+            <p>Excellent heat transfer and short vapor residence often make it the archetype for fast pyrolysis and liquid-focused operation.</p>
+          </article>
+          <article class="reactor-card reveal">
+            <h3>Rotary kiln</h3>
+            <p>Continuous solids movement and robust industrial handling can suit mixed or difficult feedstocks at larger scales.</p>
+          </article>
+          <article class="reactor-card reveal">
+            <h3>Ablative / screw systems</h3>
+            <p>Alternative configurations target specific transport, contact, or scale-up advantages depending on the process objective.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section applications-layout" id="applications">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Why it matters</p>
+          <h2>Pyrolysis sits where waste design, carbon strategy, and industrial aesthetics meet.</h2>
+        </div>
+
+        <div class="application-grid">
+          <article class="application-card reveal">
+            <h3>Waste valorization</h3>
+            <p>It can recover value from streams that are difficult to recycle mechanically or that otherwise trend toward disposal.</p>
+          </article>
+          <article class="application-card reveal">
+            <h3>Energy integration</h3>
+            <p>Gas and liquid streams can contribute to plant heat, energy systems, or future upgrading pathways.</p>
+          </article>
+          <article class="application-card reveal">
+            <h3>Carbon materials</h3>
+            <p>Activated carbon, filtration media, conductive materials, and engineered porous solids all connect to this thermal family.</p>
+          </article>
+          <article class="application-card reveal">
+            <h3>Climate-adjacent carbon use</h3>
+            <p>Some char pathways are studied for carbon persistence, land interaction, and long-lived material storage.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section faq-layout">
+        <div class="section-heading reveal">
+          <p class="eyebrow">Fast answers</p>
+          <h2>The questions that unlock the subject quickly.</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item reveal" open>
+            <summary>Is pyrolysis just another word for burning?</summary>
+            <p>No. Burning depends on oxidation. Pyrolysis limits oxygen so the material thermally decomposes instead of fully combusting.</p>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Why do heating rate and residence time matter so much?</summary>
+            <p>Because they decide whether molecules leave quickly as condensable vapor or stay hot long enough to crack into lighter gases.</p>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Does feedstock quality really change the result that much?</summary>
+            <p>Yes. Moisture, ash, particle size, chlorine, metals, and polymer or biomass composition all change yields and handling complexity.</p>
+          </details>
+          <details class="faq-item reveal">
+            <summary>Why is pyrolysis often described as circular?</summary>
+            <p>Because it can convert low-value residues into useful products and keep carbon-bearing material in a more valuable loop.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="section resource-layout" id="resources">
+        <div class="resource-panel reveal">
+          <div>
+            <p class="eyebrow">Further reading</p>
+            <h2>Links worth opening when you want the science behind the spectacle.</h2>
+            <p>
+              Start broad, then go technical. Good pyrolysis understanding comes from combining chemistry, reactor engineering,
+              material science, and systems thinking.
+            </p>
+          </div>
+
+          <div class="resource-links">
+            <a href="https://www.britannica.com/science/pyrolysis" target="_blank" rel="noreferrer">Britannica overview</a>
+            <a href="https://en.wikipedia.org/wiki/Pyrolysis" target="_blank" rel="noreferrer">Wikipedia primer</a>
+            <a href="https://www.ieabioenergy.com/" target="_blank" rel="noreferrer">IEA Bioenergy</a>
+            <a href="https://www.sciencedirect.com/topics/engineering/pyrolysis" target="_blank" rel="noreferrer">ScienceDirect topic hub</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Pure HTML, CSS, JS, and SVG. No frameworks. No shortcuts.</p>
+      <a href="#top">Back to top</a>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+

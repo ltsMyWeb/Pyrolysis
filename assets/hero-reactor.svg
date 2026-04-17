@@ -1,0 +1,35 @@
+﻿<svg width="760" height="760" viewBox="0 0 760 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="120" y="96" width="520" height="568" rx="72" fill="url(#panel)" stroke="#FFFFFF" stroke-opacity="0.22"/>
+  <rect x="220" y="156" width="320" height="408" rx="160" fill="url(#core)" stroke="#FFFFFF" stroke-opacity="0.18"/>
+  <circle cx="380" cy="360" r="116" fill="url(#heat)" opacity="0.95"/>
+  <circle cx="380" cy="360" r="64" fill="url(#spark)"/>
+  <path d="M220 262L156 230" stroke="#7CE8D9" stroke-width="16" stroke-linecap="round"/>
+  <path d="M220 458L146 486" stroke="#7CE8D9" stroke-width="16" stroke-linecap="round"/>
+  <path d="M540 280L628 252" stroke="#FFD166" stroke-width="16" stroke-linecap="round"/>
+  <path d="M540 436L626 474" stroke="#FF8A5B" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="144" cy="226" r="22" fill="#7CE8D9"/>
+  <circle cx="138" cy="490" r="20" fill="#7CE8D9" opacity="0.88"/>
+  <circle cx="638" cy="248" r="24" fill="#FFD166"/>
+  <circle cx="636" cy="478" r="24" fill="#FF8A5B"/>
+  <path d="M292 534C328 564 432 564 468 534" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/>
+  <path d="M292 186C328 156 432 156 468 186" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="16" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="panel" x1="120" y1="96" x2="640" y2="664" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#152435"/>
+      <stop offset="1" stop-color="#0A111B"/>
+    </linearGradient>
+    <linearGradient id="core" x1="220" y1="156" x2="540" y2="564" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#142434"/>
+      <stop offset="1" stop-color="#111B29"/>
+    </linearGradient>
+    <radialGradient id="heat" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(380 360) rotate(90) scale(116)">
+      <stop stop-color="#FFD166"/>
+      <stop offset="0.45" stop-color="#FF8A5B"/>
+      <stop offset="1" stop-color="#2EC4B6" stop-opacity="0.12"/>
+    </radialGradient>
+    <radialGradient id="spark" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(380 360) rotate(90) scale(64)">
+      <stop stop-color="#FFF4D1"/>
+      <stop offset="1" stop-color="#FFD166" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+</svg>

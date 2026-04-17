@@ -13,6 +13,7 @@ REM ============================================================
 set "SITE_DIR=E:\PYROLYSIS"
 set "REPO_DIR=C:\Users\Lavyansh\Documents\GitHub\PYROLYSIS"
 set "BRANCH=main"
+set "REMOTE_URL=https://github.com/ltsMyWeb/Pyrolysis.git"
 set "GIT_EXE=C:\Users\Lavyansh\AppData\Local\GitHubDesktop\app-3.5.7\resources\app\git\cmd\git.exe"
 
 echo.
@@ -67,6 +68,14 @@ if errorlevel 1 (
 )
 
 "%GIT_EXE%" branch -M %BRANCH% >nul 2>nul
+
+set "HAS_ORIGIN="
+for /f "delims=" %%R in ('"%GIT_EXE%" remote get-url origin 2^>nul') do set "HAS_ORIGIN=%%R"
+if not defined HAS_ORIGIN (
+  echo Adding origin remote...
+  "%GIT_EXE%" remote add origin %REMOTE_URL%
+)
+
 "%GIT_EXE%" add .
 
 for /f %%I in ('powershell -NoProfile -Command "Get-Date -Format \"yyyy-MM-dd HH:mm:ss\""') do set "STAMP=%%I"
@@ -77,27 +86,6 @@ if errorlevel 1 (
   echo No new commit created. This usually means there were no file changes.
 ) else (
   echo Commit created: %COMMIT_MSG%
-)
-
-set "REMOTE_URL="
-for /f "delims=" %%R in ('"%GIT_EXE%" remote get-url origin 2^>nul') do set "REMOTE_URL=%%R"
-
-if not defined REMOTE_URL (
-  echo.
-  echo No remote named origin is configured yet.
-  echo.
-  echo Next one-time step:
-  echo 1. Create or connect the GitHub repository in GitHub Desktop or GitHub.
-  echo 2. Set the origin remote for this folder.
-  echo 3. Run this file again.
-  echo.
-  echo Helpful command once you have your repo URL:
-  echo "%GIT_EXE%" remote add origin https://github.com/YOUR-USERNAME/PYROLYSIS.git
-  echo.
-  echo Then enable GitHub Pages from the %BRANCH% branch root in repo settings.
-  popd
-  pause
-  exit /b 0
 )
 
 echo Pushing to origin %BRANCH%...

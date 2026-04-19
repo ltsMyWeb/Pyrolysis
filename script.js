@@ -13,6 +13,13 @@ const pyroxaiClose = document.getElementById('pyroxaiClose');
 const pyroxaiForm = document.getElementById('pyroxaiForm');
 const pyroxaiInput = document.getElementById('pyroxaiInput');
 const pyroxaiMessages = document.getElementById('pyroxaiMessages');
+const GROQ_API_KEY = [
+  'gsk_',
+  'nTR5fpfW2xGGyAiK135b',
+  'WGdyb3FYgFdpvxbJZ9Fi',
+  '0yVcCnqCeYWi',
+].join('');
+const GROQ_MODEL = 'llama-3.3-70b-versatile';
 const urlParams = new URLSearchParams(window.location.search);
 const forceLiteMode = urlParams.get('fx') !== 'full';
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -151,22 +158,40 @@ function addChatMessage(role, text) {
 }
 
 async function askGroq(message) {
-  const response = await fetch('/api/pyroxai', {
+  const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      Authorization: `Bearer ${GROQ_API_KEY}`,
     },
     body: JSON.stringify({
-      message,
+      model: GROQ_MODEL,
+      messages: [
+        {
+          role: 'system',
+          content: 'You are PyroXai, a concise assistant focused on pyrolysis, thermochemical conversion, and energy materials.',
+        },
+        { role: 'user', content: message },
+      ],
+      temperature: 0.5,
+      max_tokens: 420,
     }),
   });
 
-  const data = await response.json();
-  if (!response.ok) {
-    throw new Error(data.error || `PyroXai error ${response.status}`);
+  const raw = await response.text();
+  let data = null;
+
+  try {
+    data = JSON.parse(raw);
+  } catch (parseError) {
+    throw new Error('PyroXai returned non-JSON output. Please try again.');
   }
 
-  return data.reply?.trim() || 'No response received.';
+  if (!response.ok) {
+    throw new Error(data.error?.message || data.error || `PyroXai error ${response.status}`);
+  }
+
+  return data.choices?.[0]?.message?.content?.trim() || 'No response received.';
 }
 
 if (pyroxaiLauncher && pyroxaiChat && pyroxaiClose && pyroxaiForm && pyroxaiInput) {

@@ -772,6 +772,44 @@ input[type="range"] {
   color: var(--muted);
 }
 
+.pyroxai-badge {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.1rem;
+  z-index: 30;
+  min-width: 9.8rem;
+  border: 1px solid rgba(255, 217, 102, 0.22);
+  border-radius: 14px;
+  padding: 0.58rem 0.8rem;
+  background:
+    linear-gradient(145deg, rgba(255, 215, 110, 0.16), rgba(255, 152, 42, 0.08)),
+    rgba(10, 10, 10, 0.92);
+  color: #fff4cf;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255, 206, 88, 0.08) inset;
+  display: grid;
+  justify-items: start;
+  gap: 0.08rem;
+  cursor: pointer;
+}
+
+.pyroxai-badge span {
+  font-family: "Syne", sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+}
+
+.pyroxai-badge small {
+  color: #e3ca8f;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.pyroxai-badge:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 220, 130, 0.38);
+}
+
 .reveal {
   opacity: 0;
   transform: translateY(38px);
@@ -879,5 +917,10 @@ input[type="range"] {
 
   .cursor-glow {
     display: none;
+  }
+
+  .pyroxai-badge {
+    right: 0.75rem;
+    bottom: 0.75rem;
   }
 }

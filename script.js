@@ -7,6 +7,8 @@ const charBar = document.getElementById('charBar');
 const cursorGlow = document.getElementById('cursorGlow');
 const noiseCanvas = document.getElementById('noiseCanvas');
 const tiltCards = document.querySelectorAll('.tilt-card');
+const pyroxaiBadge = document.getElementById('pyroxaiBadge');
+const pyroxaiStatus = document.getElementById('pyroxaiStatus');
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -96,3 +98,13 @@ function drawNoise() {
 
 drawNoise();
 window.addEventListener('resize', drawNoise);
+
+if (pyroxaiBadge && pyroxaiStatus) {
+  // Never expose raw provider API keys in frontend code.
+  pyroxaiBadge.addEventListener('click', () => {
+    pyroxaiStatus.textContent = 'Use Backend Key';
+    setTimeout(() => {
+      pyroxaiStatus.textContent = 'Secure Mode';
+    }, 1500);
+  });
+}

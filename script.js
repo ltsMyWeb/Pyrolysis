@@ -7,8 +7,21 @@ const charBar = document.getElementById('charBar');
 const cursorGlow = document.getElementById('cursorGlow');
 const noiseCanvas = document.getElementById('noiseCanvas');
 const tiltCards = document.querySelectorAll('.tilt-card');
-const pyroxaiBadge = document.getElementById('pyroxaiBadge');
-const pyroxaiStatus = document.getElementById('pyroxaiStatus');
+const pyroxaiLauncher = document.getElementById('pyroxaiLauncher');
+const pyroxaiChat = document.getElementById('pyroxaiChat');
+const pyroxaiClose = document.getElementById('pyroxaiClose');
+const pyroxaiForm = document.getElementById('pyroxaiForm');
+const pyroxaiInput = document.getElementById('pyroxaiInput');
+const pyroxaiMessages = document.getElementById('pyroxaiMessages');
+const urlParams = new URLSearchParams(window.location.search);
+const forceLiteMode = urlParams.get('fx') !== 'full';
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const hasCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
+const enableHeavyFx = !forceLiteMode && !prefersReducedMotion && !hasCoarsePointer && window.innerWidth >= 900;
+
+if (forceLiteMode) {
+  document.documentElement.classList.add('perf-lite');
+}
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
@@ -18,12 +31,12 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, {
-  threshold: 0.16,
+  threshold: forceLiteMode ? 0.08 : 0.16,
   rootMargin: '0px 0px -40px 0px'
 });
 
 revealItems.forEach((item, index) => {
-  item.style.transitionDelay = `${Math.min(index * 55, 320)}ms`;
+  item.style.transitionDelay = forceLiteMode ? '0ms' : `${Math.min(index * 55, 320)}ms`;
   observer.observe(item);
 });
 
@@ -46,10 +59,26 @@ if (tempSlider) {
   });
 }
 
-window.addEventListener('pointermove', (event) => {
-  if (!cursorGlow) return;
-  cursorGlow.style.transform = `translate(${event.clientX}px, ${event.clientY}px)`;
-});
+if (cursorGlow && enableHeavyFx) {
+  let cursorX = 0;
+  let cursorY = 0;
+  let cursorRaf = null;
+
+  const paintCursor = () => {
+    cursorGlow.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+    cursorRaf = null;
+  };
+
+  window.addEventListener('pointermove', (event) => {
+    cursorX = event.clientX;
+    cursorY = event.clientY;
+    if (!cursorRaf) {
+      cursorRaf = window.requestAnimationFrame(paintCursor);
+    }
+  }, { passive: true });
+} else if (cursorGlow) {
+  cursorGlow.style.display = 'none';
+}
 
 function setupTilt(card) {
   card.addEventListener('pointermove', (event) => {
@@ -67,7 +96,9 @@ function setupTilt(card) {
   });
 }
 
-tiltCards.forEach(setupTilt);
+if (enableHeavyFx) {
+  tiltCards.forEach(setupTilt);
+}
 
 function drawNoise() {
   if (!noiseCanvas) return;
@@ -83,7 +114,12 @@ function drawNoise() {
   noiseCanvas.style.height = `${height}px`;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-  const dots = Math.floor((width * height) / 9000);
+  if (!enableHeavyFx || forceLiteMode) {
+    ctx.clearRect(0, 0, width, height);
+    return;
+  }
+
+  const dots = Math.floor((width * height) / 14000);
   ctx.clearRect(0, 0, width, height);
 
   for (let i = 0; i < dots; i += 1) {
@@ -97,14 +133,74 @@ function drawNoise() {
 }
 
 drawNoise();
-window.addEventListener('resize', drawNoise);
+let noiseResizeTimer = null;
+if (!forceLiteMode) {
+  window.addEventListener('resize', () => {
+    clearTimeout(noiseResizeTimer);
+    noiseResizeTimer = setTimeout(drawNoise, 150);
+  });
+}
 
-if (pyroxaiBadge && pyroxaiStatus) {
-  // Never expose raw provider API keys in frontend code.
-  pyroxaiBadge.addEventListener('click', () => {
-    pyroxaiStatus.textContent = 'Use Backend Key';
-    setTimeout(() => {
-      pyroxaiStatus.textContent = 'Secure Mode';
-    }, 1500);
+function addChatMessage(role, text) {
+  if (!pyroxaiMessages) return;
+  const article = document.createElement('article');
+  article.className = `pyroxai-msg ${role === 'user' ? 'pyroxai-msg-user' : 'pyroxai-msg-ai'}`;
+  article.textContent = text;
+  pyroxaiMessages.appendChild(article);
+  pyroxaiMessages.scrollTop = pyroxaiMessages.scrollHeight;
+}
+
+async function askGroq(message) {
+  const response = await fetch('/api/pyroxai', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      message,
+    }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.error || `PyroXai error ${response.status}`);
+  }
+
+  return data.reply?.trim() || 'No response received.';
+}
+
+if (pyroxaiLauncher && pyroxaiChat && pyroxaiClose && pyroxaiForm && pyroxaiInput) {
+  pyroxaiLauncher.addEventListener('click', () => {
+    pyroxaiChat.classList.toggle('is-open');
+    if (pyroxaiChat.classList.contains('is-open')) {
+      pyroxaiInput.focus();
+    }
+  });
+
+  pyroxaiClose.addEventListener('click', () => {
+    pyroxaiChat.classList.remove('is-open');
+  });
+
+  pyroxaiForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const text = pyroxaiInput.value.trim();
+    if (!text) return;
+
+    addChatMessage('user', text);
+    pyroxaiInput.value = '';
+    addChatMessage('ai', 'Thinking...');
+
+    try {
+      const answer = await askGroq(text);
+      const thinking = pyroxaiMessages.lastElementChild;
+      if (thinking) {
+        thinking.textContent = answer;
+      }
+    } catch (error) {
+      const thinking = pyroxaiMessages.lastElementChild;
+      if (thinking) {
+        thinking.textContent = `PyroXai error: ${error.message}`;
+      }
+    }
   });
 }

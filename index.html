@@ -451,10 +451,28 @@
     </footer>
   </div>
 
-  <button class="pyroxai-badge" id="pyroxaiBadge" type="button" aria-label="PyroXai status">
+  <button class="pyroxai-launcher" id="pyroxaiLauncher" type="button" aria-label="Open PyroXai chat">
+    <span class="pyroxai-dot"></span>
     <span>PyroXai</span>
-    <small id="pyroxaiStatus">Secure Mode</small>
   </button>
+
+  <section class="pyroxai-chat" id="pyroxaiChat" aria-live="polite">
+    <header class="pyroxai-chat-head">
+      <div>
+        <strong>PyroXai</strong>
+      </div>
+      <button id="pyroxaiClose" type="button" aria-label="Close chat">x</button>
+    </header>
+    <div class="pyroxai-chat-body" id="pyroxaiMessages">
+      <article class="pyroxai-msg pyroxai-msg-ai">
+        Ask me anything about pyrolysis, reactor design, feedstocks, or outputs.
+      </article>
+    </div>
+    <form class="pyroxai-chat-form" id="pyroxaiForm">
+      <input id="pyroxaiInput" type="text" maxlength="600" placeholder="Ask PyroXai..." autocomplete="off" required>
+      <button id="pyroxaiSend" type="submit">Send</button>
+    </form>
+  </section>
 
   <script src="script.js"></script>
 </body>

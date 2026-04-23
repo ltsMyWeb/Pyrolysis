@@ -504,6 +504,49 @@ a {
   background: rgba(255, 208, 89, 0.03);
 }
 
+.slab-illustration {
+  position: absolute;
+  inset: 4.9rem 1.1rem 1.2rem 1.1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 217, 102, 0.08);
+  background:
+    radial-gradient(circle at 28% 55%, rgba(255, 207, 83, 0.12), transparent 24%),
+    radial-gradient(circle at 76% 36%, rgba(255, 155, 47, 0.12), transparent 24%),
+    linear-gradient(180deg, rgba(255, 225, 140, 0.03), rgba(255, 255, 255, 0.01));
+  overflow: hidden;
+}
+
+.slab-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.slab-caption {
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  bottom: 0.85rem;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: 14px;
+  background: rgba(10, 10, 10, 0.72);
+  border: 1px solid rgba(255, 217, 102, 0.08);
+}
+
+.slab-caption strong {
+  font-family: "Syne", sans-serif;
+  font-size: 0.98rem;
+  color: #fff1c8;
+}
+
+.slab-caption span {
+  color: #d7c18f;
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
 .mini-wave {
   position: absolute;
   left: -10%;
